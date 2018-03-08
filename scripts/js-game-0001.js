@@ -28,16 +28,20 @@
 //     return this;
 // };
 
-class sng_GameComponent {
+let _instance = null;
+
+class GameComponent {
     constructor() {
-        if (!GameComponent.instance) {
-            this.moEntities = [];
+        if (!_instance) {
+            _instance = this;
         }
 
-        return this
+        return _instance;
     }
 
     Initialize() {
+        this.moEntities = [];
+
         this.miFpsLimit = iFpsLimit;
 
         this.GetCanvas = () => document.getElementById('canvas_1');
@@ -63,9 +67,12 @@ class sng_GameComponent {
     }
 
     Update(delta) {
-        for (let i = 0; i < this.moEntities.length; i++) {
-            this.moEntities[i].Update(delta);
-        }
+        // for (let i = 0; i < this.moEntities.length; i++) {
+        //     this.moEntities[i].Update(delta);
+        // }
+        this.moEntities.forEach(delta => {
+            this.Update(delta);
+        });
     }
 
     Draw() {
@@ -75,7 +82,7 @@ class sng_GameComponent {
     }
 };
 
-export const GameComponent = new sng_GameComponent();
+export default sng_GameComponent;
 
 // GameComponent.AddEntity = function (oeEntity) {
 //     this.moEntities.push(oeEntity);

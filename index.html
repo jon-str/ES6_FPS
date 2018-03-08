@@ -16,9 +16,11 @@
     <script type="module" src="scripts/js-game-0001.js"></script>
 
     <script>
-        import GameComponent from './js-game-0001';
+        import sng_GameComponent from './js-game-0001';
 
-        GameComponent.Initialize(60);
+        const GameComponent = new sng_GameComponent();
+
+        GameComponent.Initialize();
 
         GameComponent.Run = (function () {
             let loops = 0;
