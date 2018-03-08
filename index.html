@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="res/css/main.css" />
+    <title>FPS 0.0.0.1</title>
+</head>
+    <canvas id="canvas_1" data-canvas-width= "640" data-canvas-height="480"></canvas>
+
+    <script src="scripts/js-eVec2.js"></script>
+    <script src="scripts/js-eRect.js"></script>
+    <script src="scripts/js-ePixelBuffer.js"></script>
+
+    <script type="module" src="scripts/js-game-0001.js"></script>
+
+    <script>
+        import GameComponent from './js-game-0001';
+
+        GameComponent.Initialize(60);
+
+        GameComponent.Run = (function () {
+            let loops = 0;
+            let skipTicks = 1000 / GameComponent.miFpsLimit;
+            let maxFrameSkip = 10;
+
+            let nextTick = (new Date).getTime();
+        
+            return function() {
+                loops = 0;
+                
+                let now = (new Date).getTime();
+                let delta = ((now - nextTick) * 2);
+                while (now > nextTick) {
+                    GameComponent.Update(delta);
+                    nextTick += skipTicks;
+                    loops++;
+                }
+
+                GameComponent.Draw();
+            };
+        })();
+
+        (function() {
+            let onEachFrame = function(fnCallback) {
+                setInterval(fnCallback, 1000 / GameComponent.miFpsLimit);
+            };
+
+            window.onEachFrame = onEachFrame;
+        })();
+
+        window.onEachFrame(GameComponent.Run)
+        
+        // function main(frameTime) {
+        //     window.requestAnimationFrame(main);
+
+        //     let delta = Math.floor(frameTime / 10);
+
+        //     GameComponent.Update(delta)
+        //     GameComponent.Draw();
+        // }
+    </script>
+</html> 
