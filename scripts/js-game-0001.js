@@ -30,7 +30,7 @@
 
 let _instance = null;
 
-class GameComponent {
+class sng_GameComponent {
     constructor() {
         if (!_instance) {
             _instance = this;
